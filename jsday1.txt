@@ -1,0 +1,95 @@
+Write a blog on Difference between HTTP1.1 vs HTTP2
+HTTP, or Hypertext Transfer Protocol, is the standard protocol for communication on the World Wide Web. It defines how a client (such as a web browser) and a server (such as a web server) exchange messages and data. HTTP has evolved over the years, from the original version HTTP/0.9 to the current version HTTP/2. In this blog post, we will compare the two most widely used versions of HTTP: HTTP/1.1 and HTTP/2, and see how they differ in terms of performance, efficiency, and security.
+HTTP/1.1: The Legacy Protocol
+HTTP/1.1 was introduced in 1997 and has been the dominant version of HTTP for more than two decades. It is based on a simple request-response model, where the client sends a text-based request to the server, and the server responds with a text-based response. For example, when you visit a website, your browser sends an HTTP/1.1 request like this:
+GET /index.html HTTP/1.1
+Host: www.example.com
+This request uses the GET method, which asks for a resource (in this case, the index.html file) from the server. The Host header specifies the domain name of the server. The server then responds with something like this:
+Text-based format: HTTP/1.1 uses plain text to encode the requests and responses, which makes them easy to read and debug, but also adds overhead and complexity to the parsing and processing of the messages. Moreover, text-based format is more prone to errors and ambiguities, such as whitespace, case sensitivity, and encoding issues.
+One request per connection: HTTP/1.1 uses a single TCP connection for each request-response pair, which means that the client has to open and close a connection for every resource it requests. This adds latency and overhead to the communication, as opening and closing connections requires multiple round trips and consumes network resources. Moreover, each connection can only handle one request at a time, which means that the client has to wait for the response of the previous request before sending the next one. This leads to a problem known as head-of-line blocking, where a single slow request blocks the entire connection and prevents other requests from being processed.
+Multiple connections per domain: To overcome the limitation of one request per connection, HTTP/1.1 allows the client to open multiple connections to the same server, typically up to six connections per domain. This way, the client can send multiple requests in parallel and avoid head-of-line blocking. However, this also has some drawbacks, such as:
+Increasing the load and complexity of the server, as it has to handle more connections and threads.
+Wasting network resources, as some connections may be idle or underutilized, while others may be congested or overloaded.
+Reducing the effectiveness of TCP congestion control, as each connection has its own flow and window size, and does not share information with other connections.
+Redundant headers: HTTP/1.1 uses headers to provide metadata about the requests and responses, such as the content type, the content length, the cache control, the cookies, and so on. However, many of these headers are repeated in every request and response, even if they do not change or vary. This adds unnecessary overhead and bandwidth consumption to the communication, as well as increasing the size and complexity of the messages.
+HTTP/2: The Modern Protocol
+HTTP/2 was introduced in 2015 as the successor of HTTP/1.1, with the aim of improving the performance and efficiency of the web communication. It is based on the SPDY protocol, which was developed by Google as an experimental extension of HTTP/1.1. HTTP/2 is compatible with HTTP/1.1, which means that it uses the same methods, status codes, headers, and semantics, but it introduces some significant changes and enhancements to the underlying transport layer, such as:
+
+Binary format: HTTP/2 uses binary to encode the requests and responses, instead of plain text. This makes them more compact and efficient, as well as easier to parse and process. Moreover, binary format eliminates the errors and ambiguities that may arise from text-based format, such as whitespace, case sensitivity, and encoding issues.
+Multiplexing: HTTP/2 uses a single TCP connection for multiple requests and responses, instead of one connection per request-response pair. This reduces the latency and overhead of opening and closing connections, as well as avoiding head-of-line blocking. Moreover, HTTP/2 uses a mechanism called multiplexing, which allows the client and the server to send and receive multiple requests and responses concurrently and interleaved on the same connection, without waiting for the previous ones to finish. This way, the connection is fully utilized and the network resources are optimized.
+Stream prioritization: HTTP/2 allows the client and the server to assign priorities to the requests and responses, based on their importance and dependency. This way, the server can deliver the most critical and relevant resources first, and the client can render the web page faster and more efficiently. For example, the client can indicate that the HTML file is more important than the CSS file, and that the CSS file depends on the HTML file. The server can then prioritize the delivery of the HTML file over the CSS file, and the client can start rendering the HTML file before receiving the CSS file.
+Header compression: HTTP/2 uses a mechanism called HPACK, which compresses the headers of the requests and responses, reducing the overhead and bandwidth consumption of the communication. HPACK uses two techniques to achieve header compression:
+Static table: HPACK maintains a static table of common headers and their values, which are assigned fixed indexes. For example, the header :method with the value GET has the index 2, and the header content-type with the value text/html has the index 31. Instead of sending the full headers and values, the client and the server can send the corresponding indexes, which are much smaller and faster to encode and decode.
+Dynamic table: HPACK also maintains a dynamic table of headers and values that are specific to each connection, which are assigned variable indexes. The dynamic table is initially empty, but it is updated with every request and response, adding new headers and values or updating existing ones. The client and the server can refer to the headers and values in the dynamic table by their indexes, which are also much smaller and faster to encode and decode than the full headers and values.
+Server push: HTTP/2 allows the server to push additional resources to the client, without waiting for the client to request them. This way, the server can anticipate the client’s needs and proactively fill the client’s cache with the resources that are likely to be needed in the future. For example, when the client requests the index.html file, the server can push the logo.png file and the style.css file to the client, before the client parses the HTML file and discovers that it needs them. This reduces the latency and round trips of the communication, as well as improving the user experience.
+
+Write a blog about objects and its internal representation in Javascript
+
+Objects, in JavaScript, is it’s most important data-type and forms the building blocks for modern JavaScript. These objects are quite different from JavaScript’s primitive data-types(Number, String, Boolean, null, undefined and symbol) in the sense that while these primitive data-types all store a single value each (depending on their types).
+
+Objects are more complex and each object may contain any combination of these primitive data-types as well as reference data-types.
+An object, is a reference data type. Variables that are assigned a reference value are given a reference or a pointer to that value. That reference or pointer points to the location in memory where the object is stored. The variables don’t actually store the value.
+
+Loosely speaking, objects in JavaScript may be defined as an unordered collection of related data, of primitive or reference types, in the form of “key: value” pairs. These keys can be variables or functions and are called properties and methods, respectively, in the context of an object.
+
+For Eg. If your object is a student, it will have properties like name, age, address, id, etc and methods like updateAddress, updateNam, etc.
+
+Objects and properties
+A JavaScript object has properties associated with it. A property of an object can be explained as a variable that is attached to the object. Object properties are basically the same as ordinary JavaScript variables, except for the attachment to objects. The properties of an object define the characteristics of the object. You access the properties of an object with a simple dot-notation:
+
+objectName.propertyName
+Like all JavaScript variables, both the object name (which could be a normal variable) and property name are case sensitive. You can define a property by assigning it a value. For example, let’s create an object named myCar and give it properties named make, model, and year as follows:
+
+var myCar = new Object();
+myCar.make = 'Ford';
+myCar.model = 'Mustang';
+myCar.year = 1969;
+Unassigned properties of an object are undefined (and not null).
+
+myCar.color; // undefined
+Properties of JavaScript objects can also be accessed or set using a bracket notation (for more details see property accessors). Objects are sometimes called associative arrays, since each property is associated with a string value that can be used to access it. So, for example, you could access the properties of the myCar object as follows:
+
+myCar['make'] = 'Ford';
+myCar['model'] = 'Mustang';
+myCar['year'] = 1969;
+An object property name can be any valid JavaScript string, or anything that can be converted to a string, including the empty string. However, any property name that is not a valid JavaScript identifier (for example, a property name that has a space or a hyphen, or that starts with a number) can only be accessed using the square bracket notation. This notation is also very useful when property names are to be dynamically determined (when the property name is not determined until runtime). Examples are as follows:
+
+// four variables are created and assigned in a single go, 
+// separated by commas
+var myObj = new Object(),
+    str = 'myString',
+    rand = Math.random(),
+    obj = new Object();
+myObj.type              = 'Dot syntax';
+myObj['date created']   = 'String with space';
+myObj[str]              = 'String value';
+myObj[rand]             = 'Random Number';
+myObj[obj]              = 'Object';
+myObj['']               = 'Even an empty string';console.log(myObj);
+You can also access properties by using a string value that is stored in a variable:
+
+var propertyName = 'make';
+myCar[propertyName] = 'Ford';propertyName = 'model';
+myCar[propertyName] = 'Mustang';
+You can use the bracket notation with for...in to iterate over all the enumerable properties of an object. To illustrate how this works, the following function displays the properties of the object when you pass the object and the object's name as arguments to the function:
+
+function showProps(obj, objName) {
+  var result = ``;
+  for (var i in obj) {
+    // obj.hasOwnProperty() is used to filter out properties from the object's prototype chain
+    if (obj.hasOwnProperty(i)) {
+      result += `${objName}.${i} = ${obj[i]}\n`;
+    }
+  }
+  return result;
+}
+So, the function call showProps(myCar, "myCar") would return the following:
+
+myCar.make = Ford
+myCar.model = Mustang
+myCar.year = 1969
+Creating Objects In JavaScript :
+Create JavaScript Object with Object Literal
+One of easiest way to create a javascript object is object literal, simply define the property and values inside curly braces as shown below
+
+let bike = {name: 'SuperSport', maker:'Ducati', engine:'937cc'};
